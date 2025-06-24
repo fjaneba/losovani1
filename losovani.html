@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Losování čísel</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 20px; }
+    input, button { font-size: 16px; padding: 5px; margin: 5px; }
+    #result { font-size: 48px; margin: 30px 0; height: 60px; }
+    #animation { font-size: 24px; color: gray; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Losování bez opakování</h2>
+  <label>Od: <input type="number" id="min" value="1" min="1"></label>
+  <label>Do: <input type="number" id="max" value="10" min="1"></label>
+  <button onclick="startDraw()">Nastavit rozsah</button>
+  <br><br>
+  <button onclick="drawNumber()">🎲 Losuj číslo</button>
+  <div id="animation"></div>
+  <div id="result"></div>
+
+  <script>
+    let numbers = [];
+
+    function startDraw() {
+      const min = parseInt(document.getElementById("min").value);
+      const max = parseInt(document.getElementById("max").value);
+      numbers = [];
+      for (let i = min; i <= max; i++) numbers.push(i);
+      document.getElementById("result").innerText = "";
+      document.getElementById("animation").innerText = "Seznam připraven.";
+    }
+
+    function drawNumber() {
+      if (numbers.length === 0) {
+        document.getElementById("animation").innerText = "";
+        document.getElementById("result").innerText = "🎉 Hotovo!";
+        return;
+      }
+      document.getElementById("animation").innerText = "🎰 Losuji...";
+      document.getElementById("result").innerText = "";
+      setTimeout(() => {
+        const index = Math.floor(Math.random() * numbers.length);
+        const chosen = numbers.splice(index, 1)[0];
+        document.getElementById("animation").innerText = "";
+        document.getElementById("result").innerText = chosen;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
